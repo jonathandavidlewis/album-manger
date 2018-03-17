@@ -26,13 +26,13 @@ public class Album implements Comparable<Album>{
 
     @Override
     public int compareTo(Album o) {
-        int comparrison = this.artistName.compareTo(o.artistName);
-        if (comparrison != 0) {
-            return comparrison;
+        int comparison = this.artistName.compareTo(o.artistName);
+        if (comparison != 0) {
+            return comparison;
         } else {
-            comparrison = this.releaseDate - o.releaseDate;
-            if (comparrison != 0) {
-                return comparrison;
+            comparison = this.releaseDate - o.releaseDate;
+            if (comparison != 0) {
+                return comparison;
             } else {
                 return this.albumName.compareTo(o.albumName);
             }
