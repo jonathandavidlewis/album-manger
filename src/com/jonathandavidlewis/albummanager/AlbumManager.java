@@ -14,17 +14,29 @@ public class AlbumManager {
 
     public static void main(String[] args) {
 
+        // Prompt and read user imput
+        Scanner reader = new Scanner(System.in);
+        System.out.println("This will sort the artists in a file.");
+        System.out.println("Please enter the full or relative file path of your album list, then press ENTER: ");
+        String filePath = reader.next();
+
+        // Read from the file
+
         String textLine = null;
 
         List<Album> list = new ArrayList<Album>();
 
         try {
-            FileReader fileReader = new FileReader("sample-album-list.txt");
+            FileReader fileReader = new FileReader(filePath);
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
+            // Create a list of album instances
+
             int lineNumber = 0;
             while ((textLine = bufferedReader.readLine()) != null) {
+
+                //Split each line by commas and create an album instance.
 
                 List<String> albumInfo = Arrays.asList(textLine.split(","));
 
@@ -41,6 +53,8 @@ public class AlbumManager {
 
             bufferedReader.close();
 
+            // Sort the list by predefined pattern
+
             Collections.sort(list);
 
             StringBuffer outputText = new StringBuffer();
@@ -50,12 +64,15 @@ public class AlbumManager {
                 outputText.append(albumEntryAsString);
             }
 
-            File directory = new File("output");
-            if (! directory.exists()){
-                directory.mkdir();
-            }
+            // Prompt user for output path
 
-            Path path = Paths.get(directory + "/album-output.txt");
+            System.out.println("Please enter the full or relative output file path, then press ENTER: ");
+            String outputFilePath = reader.next();
+            reader.close();
+
+            // Save the file
+
+            Path path = Paths.get(outputFilePath);
             byte[] strToBytes = outputText.toString().getBytes();
 
             Files.write(path, strToBytes);
