@@ -47,7 +47,14 @@ public class AlbumManager {
                 outputText.append(albumEntryAsString);
             }
 
+            Path path = Paths.get("album-output.txt");
+            byte[] strToBytes = outputText.toString().getBytes();
+
+            Files.write(path, strToBytes);
+
             System.out.println(outputText);
+
+            System.out.println("Your albums have been output to: " + path.toAbsolutePath());
 
         } catch (FileNotFoundException ex) {
             System.out.println("Unable to open file.");
