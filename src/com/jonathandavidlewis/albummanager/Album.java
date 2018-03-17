@@ -24,5 +24,11 @@ public class Album{
         return this.releaseDate;
     }
 
+    @Override
+    public String toString() {
+        if (albumName == null) return super.toString();
+        else return String.format("%s,%s,%d", this.albumName, this.artistName, this.releaseDate);
+    }
+
 }
 
