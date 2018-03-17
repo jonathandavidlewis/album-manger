@@ -1,6 +1,7 @@
 package com.jonathandavidlewis.albummanager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +48,12 @@ public class AlbumManager {
                 outputText.append(albumEntryAsString);
             }
 
-            Path path = Paths.get("album-output.txt");
+            File directory = new File("output");
+            if (! directory.exists()){
+                directory.mkdir();
+            }
+
+            Path path = Paths.get(directory + "/album-output.txt");
             byte[] strToBytes = outputText.toString().getBytes();
 
             Files.write(path, strToBytes);
