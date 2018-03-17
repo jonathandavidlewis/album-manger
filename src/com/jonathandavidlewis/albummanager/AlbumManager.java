@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class AlbumManager {
@@ -37,7 +40,15 @@ public class AlbumManager {
 
             bufferedReader.close();
 
-            System.out.println(list);
+            StringBuffer outputText = new StringBuffer();
+
+            for(Album album : list) {
+                String albumEntryAsString = album.toString() + "\n";
+                outputText.append(albumEntryAsString);
+            }
+
+            System.out.println(outputText);
+
         } catch (FileNotFoundException ex) {
             System.out.println("Unable to open file.");
         } catch (IOException ex) {
