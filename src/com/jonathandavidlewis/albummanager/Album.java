@@ -42,7 +42,7 @@ public class Album implements Comparable<Album>{
     @Override
     public String toString() {
         if (albumName == null) return super.toString();
-        else return String.format("%s,%s,%d", this.albumName, this.artistName, this.releaseDate);
+        else return String.format("%s,%s,%d", this.artistName, this.albumName, this.releaseDate);
     }
 
 }
