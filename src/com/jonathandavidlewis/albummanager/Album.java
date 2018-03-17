@@ -1,6 +1,6 @@
 package com.jonathandavidlewis.albummanager;
 
-public class Album{
+public class Album implements Comparable<Album>{
 
     private String artistName;
     private String albumName;
@@ -22,6 +22,21 @@ public class Album{
 
     public int getReleaseDate() {
         return this.releaseDate;
+    }
+
+    @Override
+    public int compareTo(Album o) {
+        int comparrison = this.artistName.compareTo(o.artistName);
+        if (comparrison != 0) {
+            return comparrison;
+        } else {
+            comparrison = this.releaseDate - o.releaseDate;
+            if (comparrison != 0) {
+                return comparrison;
+            } else {
+                return this.albumName.compareTo(o.albumName);
+            }
+        }
     }
 
     @Override

@@ -41,6 +41,8 @@ public class AlbumManager {
 
             bufferedReader.close();
 
+            Collections.sort(list);
+
             StringBuffer outputText = new StringBuffer();
 
             for(Album album : list) {
