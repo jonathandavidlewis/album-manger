@@ -16,7 +16,7 @@ public class AlbumManager {
 
         // Prompt and read user imput
         Scanner reader = new Scanner(System.in);
-        System.out.println("This will sort the artists in a file.");
+        System.out.println("This will sort the albums in a file.");
         System.out.println("Please enter the full or relative file path of your album list, then press ENTER: ");
         String filePath = reader.next();
 
