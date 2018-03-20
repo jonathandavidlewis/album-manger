@@ -17,7 +17,13 @@ public class AlbumManager {
 
         List<Album> albums = importAlbums(filePath);
 
-        Collections.sort(albums);
+        Comparator<Album> sortOrder = createCustomComparator();
+
+        if(!(sortOrder == null)) {
+            Collections.sort(albums, sortOrder);
+        } else {
+            System.out.println("Your albums were not sorted.");
+        }
 
         String outputFilePath = promptUserInput("Please enter the full or relative output file path, then press ENTER: ");
 
@@ -52,7 +58,6 @@ public class AlbumManager {
         } catch (IOException ex) {
             System.out.println("Error reading file.");
         }
-
         return list;
     }
 
@@ -86,5 +91,35 @@ public class AlbumManager {
         int releaseDate = Integer.parseInt(albumInfo.get(2));
 
         return new Album(artistName, albumName, releaseDate);
+    }
+
+    private static Comparator<Album> createCustomComparator() {
+        Comparator<Album> sortOrder = null;
+        String sortField;
+        String sortFields;
+
+        do {
+            sortField = promptUserInput("By what field would you like to sort? Type 'album', 'artist', 'date' or 'none'");
+            sortFields = sortField;
+            if (sortField.equals("none")) {
+                return null;
+            }
+            sortOrder = Album.getComparator(sortField);
+        } while(sortOrder == null);
+
+        while (!sortField.equals("none")) {
+            sortField = promptUserInput("By what other field would you like to sort? Type 'album', 'artist', 'date' or 'none'");
+            if (sortField.equals("none")) {
+                break;
+            }
+            Comparator<Album> additionalSortOrder = Album.getComparator(sortField);
+            if (additionalSortOrder == null) {
+                continue;
+            }
+            sortFields += ", " + sortField;
+            sortOrder = sortOrder.thenComparing(additionalSortOrder);
+        }
+        System.out.println("Albums will be sorted by " + sortFields);
+        return sortOrder;
     }
 }
