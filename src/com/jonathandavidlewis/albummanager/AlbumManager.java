@@ -15,13 +15,15 @@ public class AlbumManager {
         System.out.println("This will sort the albums in a file.");
         String filePath = promptUserInput("Please enter the full or relative file path of your album list, then press ENTER: ");
 
-        List<Album> list = importAlbums(filePath);
+        List<Album> albums = importAlbums(filePath);
 
-        Collections.sort(list);
+        Collections.sort(albums);
 
         String outputFilePath = promptUserInput("Please enter the full or relative output file path, then press ENTER: ");
 
-        exportAlbums(list, outputFilePath);
+        String albumsAsString = convertAlbumsToString(albums);
+
+        saveStringToFile(albumsAsString, outputFilePath);
     }
 
     private static String promptUserInput(String promptText) {
@@ -68,16 +70,9 @@ public class AlbumManager {
         return list;
     }
 
-    private static void exportAlbums(List<Album> list, String filePath) {
-        StringBuilder outputText = new StringBuilder();
-
-        for(Album album : list) {
-            String albumEntryAsString = album.toString() + "\n";
-            outputText.append(albumEntryAsString);
-        }
-
+    private static void saveStringToFile(String str, String filePath) {
         Path path = Paths.get(filePath);
-        byte[] strToBytes = outputText.toString().getBytes();
+        byte[] strToBytes = str.getBytes();
 
         try {
             Files.write(path, strToBytes);
@@ -86,4 +81,15 @@ public class AlbumManager {
         }
         System.out.println("Your albums have been output to: " + path.toAbsolutePath());
     }
+
+    private static String convertAlbumsToString(List<Album> list) {
+        StringBuilder outputText = new StringBuilder();
+
+        for(Album album : list) {
+            String albumEntryAsString = album.toString() + "\n";
+            outputText.append(albumEntryAsString);
+        }
+        return outputText.toString();
+    }
+
 }
