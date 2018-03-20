@@ -12,12 +12,8 @@ import java.util.*;
 public class AlbumManager {
 
     public static void main(String[] args) {
-
-        // Prompt and read user imput
-        Scanner reader = new Scanner(System.in);
         System.out.println("This will sort the albums in a file.");
-        System.out.println("Please enter the full or relative file path of your album list, then press ENTER: ");
-        String filePath = reader.next();
+        String filePath = promptUserInput("Please enter the full or relative file path of your album list, then press ENTER: ");
 
         // Read from the file
 
@@ -63,11 +59,7 @@ public class AlbumManager {
                 outputText.append(albumEntryAsString);
             }
 
-            // Prompt user for output path
-
-            System.out.println("Please enter the full or relative output file path, then press ENTER: ");
-            String outputFilePath = reader.next();
-            reader.close();
+            String outputFilePath = promptUserInput("Please enter the full or relative output file path, then press ENTER: ");
 
             // Save the file
 
@@ -86,4 +78,11 @@ public class AlbumManager {
             System.out.println("Error reading file.");
         }
     }
+
+    private static String promptUserInput(String promptText) {
+        System.out.println(promptText);
+        Scanner reader = new Scanner(System.in);
+        return reader.next();
+    }
+
 }
