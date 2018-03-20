@@ -31,8 +31,9 @@ public class AlbumManager {
         Scanner reader = new Scanner(System.in);
         return reader.next();
     }
+
     private static List<Album> importAlbums(String filePath) {
-        String textLine = null;
+        String csvLine = null;
 
         List<Album> list = new ArrayList<Album>();
 
@@ -41,23 +42,8 @@ public class AlbumManager {
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            // Create a list of album instances
-
-            int lineNumber = 0;
-            while ((textLine = bufferedReader.readLine()) != null) {
-
-                //Split each line by commas and create an album instance.
-
-                List<String> albumInfo = Arrays.asList(textLine.split(","));
-
-                String artistName = albumInfo.get(0);
-                String albumName = albumInfo.get(1);
-                int releaseDate = Integer.parseInt(albumInfo.get(2));
-
-                Album thisAlbum = new Album(artistName, albumName, releaseDate);
-
-                list.add(thisAlbum);
-                lineNumber++;
+            while ((csvLine = bufferedReader.readLine()) != null) {
+                list.add(parseAlbum(csvLine));
             }
             bufferedReader.close();
 
@@ -76,10 +62,10 @@ public class AlbumManager {
 
         try {
             Files.write(path, strToBytes);
+            System.out.println("Your file has been saved to: " + path.toAbsolutePath());
         } catch (IOException ex) {
             System.out.println("Error writing file.");
         }
-        System.out.println("Your albums have been output to: " + path.toAbsolutePath());
     }
 
     private static String convertAlbumsToString(List<Album> list) {
@@ -92,4 +78,13 @@ public class AlbumManager {
         return outputText.toString();
     }
 
+    private static Album parseAlbum(String csvLine) {
+        List<String> albumInfo = Arrays.asList(csvLine.split(","));
+
+        String artistName = albumInfo.get(0);
+        String albumName = albumInfo.get(1);
+        int releaseDate = Integer.parseInt(albumInfo.get(2));
+
+        return new Album(artistName, albumName, releaseDate);
+    }
 }
