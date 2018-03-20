@@ -69,7 +69,7 @@ public class AlbumManager {
     }
 
     private static void exportAlbums(List<Album> list, String filePath) {
-        StringBuffer outputText = new StringBuffer();
+        StringBuilder outputText = new StringBuilder();
 
         for(Album album : list) {
             String albumEntryAsString = album.toString() + "\n";
