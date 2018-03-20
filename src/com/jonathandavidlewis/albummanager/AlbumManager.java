@@ -21,26 +21,7 @@ public class AlbumManager {
 
         String outputFilePath = promptUserInput("Please enter the full or relative output file path, then press ENTER: ");
 
-        // Save the file
-
-        StringBuffer outputText = new StringBuffer();
-
-        for(Album album : list) {
-            String albumEntryAsString = album.toString() + "\n";
-            outputText.append(albumEntryAsString);
-        }
-
-        Path path = Paths.get(outputFilePath);
-        byte[] strToBytes = outputText.toString().getBytes();
-
-        try {
-            Files.write(path, strToBytes);
-        } catch (IOException ex) {
-            System.out.println("Error writing file.");
-        }
-
-        System.out.println(outputText);
-        System.out.println("Your albums have been output to: " + path.toAbsolutePath());
+        exportAlbums(list, outputFilePath);
     }
 
     private static String promptUserInput(String promptText) {
@@ -85,5 +66,24 @@ public class AlbumManager {
         }
 
         return list;
+    }
+
+    private static void exportAlbums(List<Album> list, String filePath) {
+        StringBuffer outputText = new StringBuffer();
+
+        for(Album album : list) {
+            String albumEntryAsString = album.toString() + "\n";
+            outputText.append(albumEntryAsString);
+        }
+
+        Path path = Paths.get(filePath);
+        byte[] strToBytes = outputText.toString().getBytes();
+
+        try {
+            Files.write(path, strToBytes);
+        } catch (IOException ex) {
+            System.out.println("Error writing file.");
+        }
+        System.out.println("Your albums have been output to: " + path.toAbsolutePath());
     }
 }
