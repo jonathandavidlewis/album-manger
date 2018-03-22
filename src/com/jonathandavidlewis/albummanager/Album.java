@@ -48,32 +48,11 @@ public class Album implements Comparable<Album>{
         }
     }
 
-    private static final Comparator<Album> ArtistNameComparator = new Comparator<Album>(){
+    private static final Comparator<Album> ArtistNameComparator = Comparator.comparing(a -> a.artistName);
 
-        @Override
-        public int compare(Album o1, Album o2) {
-            return o1.artistName.compareTo(o2.artistName);
-        }
+    private static final Comparator<Album> ReleaseDateComparator = Comparator.comparingInt(a -> a.releaseDate);
 
-    };
-
-    private static final Comparator<Album> ReleaseDateComparator = new Comparator<Album>(){
-
-        @Override
-        public int compare(Album o1, Album o2) {
-            return o1.releaseDate - o2.releaseDate;
-        }
-
-    };
-
-    private static final Comparator<Album> AlbumNameComparator = new Comparator<Album>(){
-
-        @Override
-        public int compare(Album o1, Album o2) {
-            return o1.albumName.compareTo(o2.albumName);
-        }
-
-    };
+    private static final Comparator<Album> AlbumNameComparator = Comparator.comparing(a -> a.albumName);
 
     @Override
     public String toString() {
